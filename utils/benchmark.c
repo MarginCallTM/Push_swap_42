@@ -6,7 +6,7 @@
 /*   By: adghouai <adghouai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 15:18:04 by acombier          #+#    #+#             */
-/*   Updated: 2026/01/21 18:46:51 by adghouai         ###   ########lyon.fr   */
+/*   Updated: 2026/02/11 12:31:43 by adghouai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	init_benchmark(t_benchmark *bench)
 {
+	bench->checker = 0;
 	bench->total_ops = 0;
 	bench->sa = 0;
 	bench->sb = 0;
@@ -61,32 +62,27 @@ static char	*parse_complexity(t_benchmark *bench)
 
 static void	ft_putnbr_fd(int n, int fd, int index)
 {
-	unsigned int	big_nb;
-	unsigned char	c;
+	char	c;
 
-	if (n < 0)
+	if (n == 10000)
 	{
-		write(fd, "-", 1);
-		big_nb = n * -1;
+		ft_printf("100.00%%\n", fd);
+		return ;
 	}
-	else
-		big_nb = n;
-	if (big_nb / 10 != 0)
-		ft_putnbr_fd((big_nb / 10), fd, index + 1);
-	c = (big_nb % 10) + 48;
+	if (index < 3)
+		ft_putnbr_fd((n / 10), fd, index + 1);
+	c = (n % 10) + 48;
 	write(fd, &c, 1);
 	if (index == 2)
 		write(fd, ".", 1);
 	else if (index == 0)
-		ft_printf("%%\n", 2);
+		ft_printf("%%\n", fd);
 }
 
 void	print_benchmark(t_benchmark *bench)
 {
 	int	res;
 
-	if (bench->enabled == 0)
-		return ;
 	res = bench->disorder * 10000;
 	ft_printf("[bench] disorder: ", 2);
 	ft_putnbr_fd(res, 2, 0);

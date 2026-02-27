@@ -6,7 +6,7 @@
 /*   By: adghouai <adghouai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 20:53:24 by adghouai          #+#    #+#             */
-/*   Updated: 2026/01/21 13:14:36 by adghouai         ###   ########lyon.fr   */
+/*   Updated: 2026/01/23 16:02:19 by adghouai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_printf(const char *str, int output, ...)
 		}
 		else
 		{
-			ft_putchar(str[i], output);
+			ft_putchar_fd(str[i], output);
 			count_char++;
 		}
 		i++;

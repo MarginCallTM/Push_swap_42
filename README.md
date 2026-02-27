@@ -6,7 +6,7 @@
 
 **push_swap** is a sorting algorithm project that challenges you to sort a stack of integers using a limited set of operations with the minimum number of moves possible. The project involves two stacks (A and B) and a set of predefined operations to manipulate them.
 
-The goal is to sort stack A in ascending order using the following operations:
+The goal is to sort stack A in ascending order using only the following operations:
 - **sa/sb**: Swap the first two elements of stack A/B
 - **pa/pb**: Push the top element from one stack to the other
 - **ra/rb**: Rotate stack A/B (first element becomes last)
@@ -22,7 +22,7 @@ This implementation features an **adaptive algorithm selection** system that aut
 # Build the project
 make
 
-# Clean object files
+# Clean object and dependencies files
 make clean
 
 # Full clean (remove executable and libraries)
@@ -39,13 +39,13 @@ make re
 ```
 
 **Options:**
-| Option | Description |
-|--------|-------------|
-| `--simple` | Force selection-based algorithm |
-| `--medium` | Force chunk-based algorithm |
-| `--complex` | Force radix sort algorithm |
+| Option       | Description                      |
+|--------------|----------------------------------|
+| `--simple`   | Force selection-based algorithm  |
+| `--medium`   | Force chunk-based algorithm      |
+| `--complex`  | Force radix sort algorithm       |
 | `--adaptive` | Use adaptive selection (default) |
-| `--bench` | Display performance benchmark |
+| `--bench`    | Display performance benchmark    |
 
 **Examples:**
 ```bash
@@ -67,25 +67,17 @@ make re
 - Errors are printed to stderr as `Error\n`
 - Benchmark data (if enabled) is printed to stderr
 
-### Verification
-
-You can verify the output using the provided checker:
-```bash
-ARG="4 67 3 87 23"; ./push_swap $ARG | wc -l
-ARG="4 67 3 87 23"; ./push_swap $ARG | ./checker_linux $ARG
-```
-
 ## Algorithms
 
 ### Overview
 
 This project implements three distinct sorting algorithms with automatic selection based on input disorder:
 
-| Algorithm | Complexity | Best For |
-|-----------|------------|----------|
-| Simple (Selection) | O(n²) | Nearly sorted input (disorder < 20%) |
-| Medium (Chunk-based) | O(n√n) | Moderate disorder (20% - 50%) |
-| Complex (Radix) | O(n log n) | High disorder (> 50%) |
+| Algorithm            | Complexity | Best For                             |
+|----------------------|------------|--------------------------------------|
+| Simple (Selection)   | O(n²)      | Nearly sorted input (disorder < 20%) |
+| Medium (Chunk-based) | O(n√n)     | Moderate disorder (20% - 50%)        |
+| Complex (Radix)      | O(n log n) | High disorder (> 50%)                |
 
 ### Algorithm Details and Justification
 
@@ -150,13 +142,60 @@ This project implements three distinct sorting algorithms with automatic selecti
 
 The default behavior analyzes the input's **disorder level** (ratio of inversions to total pairs) and selects the optimal algorithm:
 
-| Disorder Level | Algorithm Selected | Reasoning |
-|----------------|-------------------|-----------|
-| < 20% | Simple | Few elements out of place; selection sort handles efficiently |
-| 20% - 50% | Medium | Moderate reshuffling needed; chunks provide good balance |
-| > 50% | Complex | Heavy restructuring needed; radix sort guarantees efficiency |
+| Disorder Level | Algorithm Selected | Reasoning                                                     |
+|----------------|--------------------|---------------------------------------------------------------|
+| < 20%          | Simple             | Few elements out of place; selection sort handles efficiently |
+| 20% - 50%      | Medium             | Moderate reshuffling needed; chunks provide good balance      |
+| > 50%          | Complex            | Heavy restructuring needed; radix sort guarantees efficiency  |
 
 This adaptive approach ensures optimal performance across different input patterns without requiring manual algorithm selection.
+
+## Checker (Bonus)
+
+The **checker** program is a companion tool that verifies whether a given sequence of operations correctly sorts the stack. It works as follows:
+
+1. It takes the same list of integers as `push_swap` and initializes stack A
+2. It reads operations from **standard input** (one per line), such as `sa`, `pb`, `rra`, etc.
+3. It applies each operation to the stacks in order
+4. Once all operations have been read, it checks the result:
+   - If stack A is sorted in ascending order and stack B is empty, it prints **OK**
+   - Otherwise, it prints **KO**
+   - If an invalid operation is encountered, it prints **Error** and exits
+
+### Usage
+
+```bash
+# Pipe push_swap output directly into checker
+./push_swap 3 2 1 5 4 | ./checker 3 2 1 5 4
+
+# Or provide operations manually (end with Ctrl+D)
+./checker 3 2 1
+sa
+ra
+```
+
+### Compilation
+
+```bash
+# Build the checker bonus
+make bonus
+```
+
+## Contributions
+
+### acombier
+
+- **Operations**: Implementation of all stack operations (`sa`, `sb`, `pa`, `pb`, `ra`, `rb`, `rra`, `rrb` and their combined variants)
+- **Benchmark**: Implementation of the benchmark system (`--bench` option) for measuring and displaying performance metrics
+- **Medium algorithm**: Design and implementation of the chunk-based sorting strategy (`medium_algo.c`)
+
+### adghouai
+
+- **Parsing**: Implementation of the input parsing and error handling (`error_checker.c`, argument validation, duplicate detection)
+- **Simple algorithm**: Implementation of the selection-based sorting strategy (`simple_algo.c`)
+- **Complex algorithm**: Implementation of the radix sort strategy (`complex_algo.c`)
+- **Adaptive algorithm**: Implementation of the adaptive algorithm selection system based on input disorder level
+- **Checker bonus**: Implementation of the checker program (`bonus/checker_bonus.c`, `bonus/error_checker_bonus.c`)
 
 ## Resources
 
@@ -180,8 +219,3 @@ No AI was used for:
 - Implementing stack operations
 - Creating the project structure or Makefile
 - Writing validation and error handling code
-
-## Authors
-
-- **acombier** - 42 Student
-- **adghouai** - 42 Student

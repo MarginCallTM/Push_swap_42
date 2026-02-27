@@ -6,7 +6,7 @@
 /*   By: adghouai <adghouai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 14:38:24 by adghouai          #+#    #+#             */
-/*   Updated: 2026/01/21 12:58:46 by adghouai         ###   ########lyon.fr   */
+/*   Updated: 2026/01/23 16:02:36 by adghouai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ int	write_hex_uppercase(unsigned int nb, int output)
 
 int	write_percent_sign(int output)
 {
-	ft_putchar('%', output);
+	ft_putchar_fd('%', output);
 	return (1);
 }

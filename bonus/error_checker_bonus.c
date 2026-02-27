@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_checker.c                                    :+:      :+:    :+:   */
+/*   error_checker_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adghouai <adghouai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/30 22:01:02 by adghouai          #+#    #+#             */
-/*   Updated: 2026/01/23 17:19:58 by adghouai         ###   ########lyon.fr   */
+/*   Created: 2026/01/23 16:25:39 by adghouai          #+#    #+#             */
+/*   Updated: 2026/01/23 17:25:09 by adghouai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "push_swap_bonus.h"
 
 static int	digit_check(char **argv, int argc)
 {
@@ -18,8 +18,6 @@ static int	digit_check(char **argv, int argc)
 	size_t	j;
 
 	i = 1;
-	while (option_check(argv[i]))
-		i++;
 	while (i < argc)
 	{
 		j = 0;
@@ -30,9 +28,12 @@ static int	digit_check(char **argv, int argc)
 			if (!(ft_isdigit(argv[i][j])) && argv[i][j] != ' '
 				&& argv[i][j] != '-')
 				return (0);
-			if (argv[i][j] == '-' && (ft_isdigit(argv[i][j + 1]) == 0 || (j != 0
-				&& argv[i][j - 1] != ' ')))
-				return (0);
+			if (argv[i][j] == '-')
+			{
+				if (ft_isdigit(argv[i][j + 1]) == 0 || (j != 0 && argv[i][j
+					- 1] != ' '))
+					return (0);
+			}
 			j++;
 		}
 		i++;
@@ -47,8 +48,6 @@ static void	range_check(char **argv, int argc)
 	char	**split_args;
 
 	i = 1;
-	while (option_check(argv[i]))
-		i++;
 	while (i < argc)
 	{
 		j = 0;
@@ -92,7 +91,7 @@ static void	duplicate_check(t_stack *a)
 	}
 }
 
-void	error_checker(char **argv, int argc, t_stack *a)
+void	error_checker_bonus(char **argv, int argc, t_stack *a)
 {
 	if (digit_check(argv, argc) == 0)
 	{

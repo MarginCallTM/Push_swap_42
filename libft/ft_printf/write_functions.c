@@ -6,7 +6,7 @@
 /*   By: adghouai <adghouai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 12:43:43 by adghouai          #+#    #+#             */
-/*   Updated: 2026/01/21 12:55:16 by adghouai         ###   ########lyon.fr   */
+/*   Updated: 2026/01/23 16:05:07 by adghouai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	write_char(int c, int output)
 {
-	ft_putchar(c, output);
+	ft_putchar_fd(c, output);
 	return (1);
 }
 
@@ -24,11 +24,11 @@ int	write_string(char *str, int output)
 
 	if (!str)
 	{
-		ft_putstr("(null)", output);
+		ft_putstr_fd("(null)", output);
 		return (6);
 	}
 	count_char = ft_strlen(str);
-	ft_putstr(str, output);
+	ft_putstr_fd(str, output);
 	return (count_char);
 }
 
@@ -38,11 +38,11 @@ int	write_pointer(long unsigned int ptr, int output)
 
 	if (ptr == 0)
 	{
-		ft_putstr("(nil)", output);
+		ft_putstr_fd("(nil)", output);
 		return (5);
 	}
 	count_char = 2;
-	ft_putstr("0x", output);
+	ft_putstr_fd("0x", output);
 	ft_putnbr_pointer(ptr, &count_char, output);
 	return (count_char);
 }
@@ -52,7 +52,7 @@ int	write_decimal(int nb, int output)
 	int	count_char;
 
 	count_char = 0;
-	ft_putnbr(nb, &count_char, output);
+	ft_putnbr_fd_libft(nb, &count_char, output);
 	return (count_char);
 }
 

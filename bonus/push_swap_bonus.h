@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.h                                        :+:      :+:    :+:   */
+/*   push_swap_bonus.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adghouai <adghouai@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/30 21:37:16 by adghouai          #+#    #+#             */
-/*   Updated: 2026/02/11 12:30:35 by adghouai         ###   ########lyon.fr   */
+/*   Created: 2026/01/22 16:40:51 by adghouai          #+#    #+#             */
+/*   Updated: 2026/02/11 12:33:44 by adghouai         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP_H
-# define PUSH_SWAP_H
+#ifndef PUSH_SWAP_BONUS_H
+# define PUSH_SWAP_BONUS_H
 
 # define INT_MAX 2147483647
 # define INT_MIN -2147483648
@@ -46,31 +46,23 @@ typedef struct s_stack
 	t_benchmark	*bench;
 }				t_stack;
 
-typedef struct s_chunk_info
-{
-	int			min;
-	int			max;
-	int			chunk_size;
-	size_t		num_chunks;
-}				t_chunk_info;
-
 // Bench functions
 void			init_benchmark(t_benchmark *bench);
-void			print_benchmark(t_benchmark *bench);
 
 // ft_printf
 int				ft_printf(const char *str, int output, ...);
 
+// gnl
+char			*get_next_line(int fd);
+
 // Parsing and error handling
-void			error_checker(char **argv, int argc, t_stack *a);
+int				ft_strcmp(char *s1, const char *s2);
+void			error_checker_bonus(char **argv, int argc, t_stack *a);
 int				ft_atoi(const char *nptr);
 int				ft_atoi_range(const char *nptr);
-int				option_check(char *arg);
 int				ft_isdigit(int c);
 char			**ft_split(char *s, char c);
 size_t			compute_tab_len(char **argv, int argc);
-void			options_selector(int argc, char **argv, t_benchmark *bench);
-int				ft_strcmp(char *s1, const char *s2);
 int				initialize_stack_array(t_stack *stack, size_t size);
 
 // Memory freeing functions
@@ -81,38 +73,18 @@ void			free_double_tab(char **tab);
 void			fill_array(t_stack *a, char **argv, int argc);
 void			fill_array_index(t_stack *a);
 
-// Simple algo
-void			simple_algo(t_stack *a, t_stack *b);
-
-// Medium algo
-void			medium_algo(t_stack *a, t_stack *b);
-
-// Complex algo
-void			find_max_div(t_stack *a, t_stack *b);
-
 // Operations
 void			pa(t_stack *a, t_stack *b);
 void			pb(t_stack *a, t_stack *b);
 void			ra(t_stack *a);
 void			rb(t_stack *b);
+void			rr(t_stack *a, t_stack *b);
 void			rra(t_stack *a);
 void			rrb(t_stack *b);
+void			rrr(t_stack *a, t_stack *b);
+void			sa(t_stack *a);
+void			sb(t_stack *b);
+void			ss(t_stack *a, t_stack *b);
 void			get_ptr_value(int *dst, int *src);
-
-// Chunks sort utils
-size_t			ft_sqrt(size_t nb);
-size_t			calculate_num_chunks(size_t size);
-void			find_min_max(t_stack *stack, int *min, int *max);
-int				calculate_chunk_size(int min, int max, size_t num_chunks);
-int				is_in_chunk(int value, int min, int chunk_num, int chunk_size);
-
-// Chunks finds
-int				find_chunk_number(t_stack *a, int min, int chunk_num,
-					int chunk_size);
-size_t			find_max_index(t_stack *stack);
-
-// Chunks rotate
-void			rotate_to_top_a(t_stack *a, size_t index);
-void			rotate_to_top_b(t_stack *b, size_t index);
 
 #endif
